@@ -1,7 +1,13 @@
 var controller = {
     login: function (req, res) {
-        console.log('登陆');
-        res.end();
+        console.log(req.body.account);
+        console.log(req.body.password);
+        console.log(req.body.phone);
+        console.log(req.body.email);
+        console.log(req.body.nickname);
+        console.log(req.body.identity);
+        console.log(req.body.identityId);
+        res.end('login');
     },
 
     regist: function (req, res) {

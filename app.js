@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Router = require('./routes/index');
-var port = 8000;
 
+var port = 8000;
 var app = express();
 
 app.use(logger('dev'));
@@ -40,7 +40,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.end('error');
 });
 
 app.listen(port,()=>{
