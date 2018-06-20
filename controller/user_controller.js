@@ -20,7 +20,7 @@ var controller = {
         .then(function(data){
             if(data == null){
                 result.status = false;
-                result.msg = LoginFailUser;
+                result.msg = msg.LoginFailUser;
             }
             else{
                 result.status = (data.password == password) ? true : false;
