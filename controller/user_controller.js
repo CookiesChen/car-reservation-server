@@ -1,23 +1,26 @@
+var user_model = require('../model/user_model.js')
+
 var controller = {
     login: function (req, res) {
-        console.log(req.body.account);
-        console.log(req.body.password);
-        console.log(req.body.phone);
-        console.log(req.body.email);
-        console.log(req.body.nickname);
-        console.log(req.body.identity);
-        console.log(req.body.identityId);
-        res.end('login');
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        }).then(user_model.find_user)
+        .then(function(data){
+            res.send(JSON.parse(data));
+            console.log("### Login");
+            res.end();
+        }).catch();
     },
 
     regist: function (req, res) {
-        console.log('注册');
-        res.end();
-    },
-
-    logout: function (req,res){
-        console.log('登出');
-        res.end();
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        }).then(user_model.add_user)
+        .then(function(data){
+            res.send(JSON.parse(data));
+            console.log("### register");
+            res.end();
+        }).catch();
     }
 }
 
