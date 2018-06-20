@@ -12,7 +12,6 @@ var msg = {
 
 var controller = {
     login: function (req, res) {
-        var account = req.body.account;
         var password = req.body.password;
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
