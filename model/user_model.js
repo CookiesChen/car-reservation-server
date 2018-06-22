@@ -1,17 +1,10 @@
-//mongodb
-var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+var allModel = require('../model/schema.js')
 
-var conn = mongoose.connect('mongodb://127.0.0.1:27017/car');
-var userSchema = new mongoose.Schema({
-  _id : String,
-  password : String,
-  phone : String
-});
+var User = allModel.user;
 
-var User = mongoose.model('User',userSchema);
 
 var model = {
+
     add_user: function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
@@ -20,7 +13,10 @@ var model = {
         var user = new User({
             _id: account,
             password: password,
-            phone : phone
+            name : "",
+            phone : phone,
+            schoolId : "",
+            role : "none"
         });
         return new Promise(function(resolve, reject){
             user.save(err=>{
@@ -37,8 +33,17 @@ var model = {
                 resolve(userToFind);
             });
         });
-    }
+    },
 
+    update_user : function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        return new Promise(function(resolve, reject){
+            User.findByIdAndUpdate(account, json_data, function(err, doc){
+                resolve(err);
+            });
+        });
+    }
 
 
 }
