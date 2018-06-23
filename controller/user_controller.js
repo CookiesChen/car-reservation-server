@@ -30,7 +30,7 @@ var controller = {
             var temp = {status:true, user:{}};
             temp.status = (data == null)? false: true;
             temp.user = data;
-            temp.user.password = "";
+            //temp.user.password = "";
             res.send(temp);
             console.log("### Login");
             res.end();
