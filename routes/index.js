@@ -3,14 +3,17 @@ var router = express.Router();
 var user_controller = require('../controller/user_controller.js')
 var school_controller = require('../controller/school_controller.js')
 
-
-router.get('/regist', user_controller.regist);
-router.get('/login', user_controller.login);
+//用户
 router.post('/regist', user_controller.regist);
 router.post('/login', user_controller.login);
-router.post('/applytrainee', user_controller.becomeTrainee);
+router.post('/apply', user_controller.apply);
 router.post('/getapplyschool', user_controller.getApplySchool);
+
+//管理员
 router.post('/registschool', school_controller.registSchool);
+
+//驾校
 router.post('/accepttraninee', school_controller.acceptTrainee);
+router.post('/accepttraniner', school_controller.acceptTrainer);
 
 module.exports = router;

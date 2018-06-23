@@ -11,10 +11,6 @@ var model = {
         name : String,
         phone : String,
         schoolId: String,
-
-        status : Boolean, 
-        //是否已经申请
-
         role: String
         // none    未定
         // trainee 学员
@@ -26,18 +22,22 @@ var model = {
         _id : String,
         // 名字作为主码
         phone : String,
-        email : String,
-        trainees:[{
-            _id : String,
-            name : String,
-            phone : String
-        }]
+        email : String
 
     })),
 
-    applytrainee:  mongoose.model('applyTrainee', new mongoose.Schema({
+    apply:  mongoose.model('apply', new mongoose.Schema({
         schoolId : String,
-        traineeId : String
+        account : String,
+        time : Date,
+        role : String
+    })),
+
+    member: mongoose.model('member', new mongoose.Schema({
+        schoolId : String,
+        traineeId : String,
+        time : Date,
+        role : String
     }))
 }
 
