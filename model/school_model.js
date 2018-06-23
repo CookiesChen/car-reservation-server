@@ -10,7 +10,7 @@ var model = {
         console.log(data);
         return new Promise(function(resolve, reject){
             School.find({ _id : {"$in" : json_data.schools}}, function(err, schools){
-                resolve(schools);
+                resolve(JSON.stringify({schools : schools}));
             });
         });
     },
@@ -29,8 +29,18 @@ var model = {
                 resolve(err);
             });
         });
-    }
+    },
 
+    add_trainee : function(data){
+        var json_data = JSON.parse(data);
+        var schoolId = json_data.schoolId;
+        var account = json_data.account;
+        return new Promise(function(resolve, reject){
+            School.collection.update({ "_id" : schoolId },{ "$push" : { trainees : account}}, function(err){
+                resolve(err);
+            });
+        });
+    }
 }
 
 

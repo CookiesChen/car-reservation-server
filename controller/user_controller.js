@@ -20,22 +20,18 @@ var controller = {
     // 请求数据json格式 
     // { account, password }
     // 返回数据json格式
-    // { status, msg }
+    // { status, user }
     login: function (req, res) {
         var password = req.body.password;
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         }).then(user_model.find_user)
         .then(function(data){
-            if(data == null){
-                result.status = false;
-                result.msg = msg.LoginFailUser;
-            }
-            else{
-                result.status = (data.password == password) ? true : false;
-                result.msg = (data.password == password) ? msg.LoginSuccess : msg.LoginFailPassword;
-            }
-            res.send(result);
+            var temp = {status:true, user:{}};
+            temp.status = (data == null)? false: true;
+            temp.user = data;
+            temp.user.password = "";
+            res.send(temp);
             console.log("### Login");
             res.end();
         }).catch();
@@ -83,7 +79,7 @@ var controller = {
     // 请求数据json格式 
     // { account }
     // 返回数据json格式
-    // { status, 学校数组 }
+    // { 学校数组 }
     getApplySchool: function(req, res){
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
@@ -91,6 +87,8 @@ var controller = {
         .then(applyTrainee_model.get_applyschools)
         .then(school_model.find_school)
         .then(function(data){
+            data = JSON.parse(data);
+            data.status = true;
             res.send(data);
             console.log("### Trainee get apply school");
             res.end();

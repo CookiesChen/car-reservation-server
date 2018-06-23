@@ -20,6 +20,17 @@ var model = {
         });
     },
 
+    delete_applytrainee : function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        var schoolId = json_data.schoolId;
+        return new Promise(function(resolve, reject){
+            applyTrainee.deleteOne({traineeId:account,schoolId:schoolId}, function(err){
+                resolve(data);
+            });
+        });
+    },
+
     get_applyschools : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;

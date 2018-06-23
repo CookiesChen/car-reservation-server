@@ -11,6 +11,6 @@ router.post('/login', user_controller.login);
 router.post('/applytrainee', user_controller.becomeTrainee);
 router.post('/getapplyschool', user_controller.getApplySchool);
 router.post('/registschool', school_controller.registSchool);
-
+router.post('/accepttraninee', school_controller.acceptTrainee);
 
 module.exports = router;
