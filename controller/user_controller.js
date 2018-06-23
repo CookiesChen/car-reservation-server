@@ -98,8 +98,7 @@ var controller = {
                     }
                 }
             }
-            data.status = true;
-            res.send(schools);
+            res.send({schools:schools,status:true});
             console.log("### Trainee get apply school");
             res.end();
         })
