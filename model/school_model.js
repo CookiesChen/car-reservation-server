@@ -21,8 +21,7 @@ var model = {
         var school = new School({
             _id : schoolId,
             phone : "",
-            email : "",
-            trainees: []
+            email : ""
         });
         return new Promise(function(resolve, reject){
             school.save(err=>{
