@@ -28,8 +28,9 @@ var model = {
     find_user: function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
+        var password = json_data.password;
         return new Promise(function(resolve, reject){
-            User.findById(account, function(err, userToFind){
+            User.findById({_id:account,password:password}, function(err, userToFind){
                 resolve(userToFind);
             });
         });

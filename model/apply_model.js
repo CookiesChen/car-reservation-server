@@ -1,17 +1,21 @@
 var allModel = require('../model/schema.js')
 
-var applyTrainee = allModel.applytrainee;
+var Apply = allModel.apply;
 
 
 var model = {
 
-    add_applytrainee : function(data){
+    add_apply : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
         var schoolId = json_data.schoolId;
-        var apply = new applyTrainee({
+        var role = json_data.role;
+        var mydate = new Date();
+        var apply = new Apply({
             schoolId : schoolId,
-            traineeId : account
+            account : account,
+            time : mydate,
+            role : role
         });
         return new Promise(function(resolve, reject){
             apply.save(err=>{
@@ -20,12 +24,13 @@ var model = {
         });
     },
 
-    delete_applytrainee : function(data){
+    delete_apply : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
         var schoolId = json_data.schoolId;
+        var role = json_data.role;
         return new Promise(function(resolve, reject){
-            applyTrainee.deleteOne({traineeId:account,schoolId:schoolId}, function(err){
+            Apply.deleteOne({account:account, schoolId:schoolId, role}, function(err){
                 resolve(data);
             });
         });
@@ -34,11 +39,13 @@ var model = {
     get_applyschools : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
+        var role = json_data.role;
         return new Promise(function(resolve, reject){
-            applyTrainee.find({ traineeId : account},function(err, schools){
-                var temp = { schools: [] };
+            Apply.find({ account: account, role: role },function(err, schools){
+                var temp = { schools: [], time : [] };
                 for(var i = 0; i < schools.length; i ++){
                     temp.schools[i] = schools[i].schoolId;
+                    temp.time[i] = schools[i].time;
                 }
                 resolve(JSON.stringify(temp));
             });
