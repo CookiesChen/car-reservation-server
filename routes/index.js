@@ -7,7 +7,8 @@ var school_controller = require('../controller/school_controller.js')
 router.post('/regist', user_controller.regist);
 router.post('/login', user_controller.login);
 router.post('/apply', user_controller.apply);
-router.post('/getapplyschool', user_controller.getApplySchool);
+router.post('/getapply', user_controller.getApply);
+router.post('/getschools', user_controller.getSchools);
 
 // 管理员
 router.post('/registschool', school_controller.registSchool);

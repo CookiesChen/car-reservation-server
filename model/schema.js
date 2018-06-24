@@ -30,7 +30,11 @@ var model = {
         schoolId : String,
         account : String,
         time : Date,
-        role : String
+        role : String,
+        status: String
+        // accept  通过
+        // wait    审核中
+        // reject  被拒绝
     })),
 
     member: mongoose.model('member', new mongoose.Schema({

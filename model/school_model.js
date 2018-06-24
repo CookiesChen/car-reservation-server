@@ -7,6 +7,7 @@ var model = {
 
     find_school: function(data){
         var json_data = JSON.parse(data);
+        console.log(data);
         return new Promise(function(resolve, reject){
             School.find({ _id : {"$in" : json_data.schools}}, function(err, schools){
                 resolve(JSON.stringify({schools : schools, time: json_data}));

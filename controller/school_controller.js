@@ -39,8 +39,7 @@ var controller = {
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
-        .then(apply_model.delete_apply)
-        .then(school_model.add_trainee)
+        .then(apply_model.update_apply)
         .then(function(err){
             result.status = err ? false : true;
             result.msg = err ? msg.AcceptFail : msg.AcceptSuccess;
@@ -59,8 +58,7 @@ var controller = {
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
-        .then(apply_model.delete_apply)
-        .then(school_model.add_trainer)
+        .then(apply_model.update_apply)
         .then(function(err){
             result.status = err ? false : true;
             result.msg = err ? msg.AcceptFail : msg.AcceptSuccess;

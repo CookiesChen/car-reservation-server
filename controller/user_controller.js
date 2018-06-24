@@ -80,11 +80,11 @@ var controller = {
     // { account, role }
     // 返回数据json格式
     // { 学校数组 }
-    getApplySchool: function(req, res){
+    getApply: function(req, res){
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
-        .then(apply_model.get_applyschools)
+        .then(apply_model.get_apply)
         .then(school_model.find_school)
         .then(function(data){
             data = JSON.parse(data);
@@ -94,6 +94,7 @@ var controller = {
                 for(var j = 0; j < times.schools.length; j++){
                     if(times.schools[i] == schools[j]._id){
                         (schools[j])['time'] = times.time[i];
+                        (schools[j])['status'] = times.status[i];
                         break;
                     }
                 }
@@ -103,7 +104,28 @@ var controller = {
             res.end();
         })
         .catch();
-    } 
+    },
+
+    // 我的驾校列表
+    // 请求数据json格式 
+    // { account, role }
+    // 返回数据json格式
+    // { 学校数组 }
+    getSchools: function(req, res){
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        })
+        .then(apply_model.get_acceptschools)
+        .then(school_model.find_school)
+        .then(function(data){
+            data = JSON.parse(data);
+            var schools = data.schools;
+            res.send({schools:schools,status:true});
+            console.log("### Trainee get apply school");
+            res.end();
+        })
+        .catch();
+    }
 }
 
 module.exports = controller;
