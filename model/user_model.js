@@ -1,10 +1,8 @@
 var allModel = require('../model/schema.js')
-
 var User = allModel.user;
 
 
 var model = {
-
     add_user: function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
@@ -20,7 +18,16 @@ var model = {
         });
         return new Promise(function(resolve, reject){
             user.save(err=>{
-                resolve(err);
+                if(err) reject();
+                else{
+                    resolve(JSON.stringify({
+                        account: account,
+                        name : "",
+                        phone : phone,
+                        schoolId : "",
+                        role : "none"
+                    }));
+                }
             });
         });
     },
@@ -30,8 +37,27 @@ var model = {
         var account = json_data.account;
         var password = json_data.password;
         return new Promise(function(resolve, reject){
-            User.findById({_id:account,password:password}, function(err, userToFind){
-                resolve(userToFind);
+            User.find({_id:account, password:password}, function(err, userToFind){
+                
+                if(userToFind.length == 0) reject();
+                else{
+                    resolve(JSON.stringify({
+                        account: userToFind[0].account,
+                        name : userToFind[0].name,
+                        phone : userToFind[0].phone,
+                        schoolId : userToFind[0].schoolId,
+                        role : userToFind[0].role
+                    }));
+                }
+            });
+        });
+    },
+
+    get_users: function(data){
+        var json_data = JSON.parse(data);
+        return new Promise(function(resolve, reject){
+            User.find({ _id : {"$in" : json_data.users}}, function(err, users){
+                resolve(JSON.stringify({users : users}));
             });
         });
     },
@@ -44,9 +70,18 @@ var model = {
                 resolve(err);
             });
         });
+    },
+
+    modify_user: function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        return new Promise(function(resolve, reject){
+            User.findByIdAndUpdate(account, {role: json_data.role, schoolId: json_data.schoolId}, function(err, doc){
+                if(err) reject();
+                else resolve(data);
+            });
+        });
     }
-
-
 }
 
 

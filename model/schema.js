@@ -37,11 +37,14 @@ var model = {
         // reject  被拒绝
     })),
 
-    member: mongoose.model('member', new mongoose.Schema({
-        schoolId : String,
+    train: mongoose.model('train', new mongoose.Schema({
+        trainerId : String,
         traineeId : String,
         time : Date,
-        role : String
+        status: String
+        // accept  通过
+        // wait    审核中
+        // reject  被拒绝
     }))
 }
 
