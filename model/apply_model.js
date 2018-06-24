@@ -61,10 +61,11 @@ var model = {
             Apply.find({ account: account },function(err, apply){
                 if(err) reject();
                 else{
-                    var temp = {applytimes: [], schoolIds: []};
+                    var temp = {applytimes: [], schoolIds: [], status: []};
                     for(var i = 0; i < apply.length; i ++){
                         temp.schoolIds[i] = apply[i].schoolId;
                         temp.applytimes[i]  = apply[i].time;
+                        temp.status[i]  = apply[i].status;
                     }
                     resolve(JSON.stringify(temp));
                 }

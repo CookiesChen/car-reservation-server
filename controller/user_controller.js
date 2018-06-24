@@ -101,12 +101,14 @@ var controller = {
         .then(function(data){
             data = JSON.parse(data);
             var applytimes = data.applytimes;
+            var status = data.status;
             var schoolIds = data.schoolIds;
             var schools = data.schools;
             for(var i = 0; i < schoolIds.length; i++){
                 for(var j = 0; j < schoolIds.length; j++){
                     if(schools[i]._id == schoolIds[j]){
                         schools[i]['applytime'] = applytimes[j];
+                        schools[i]['status'] = status[j];
                         break;
                     }
                 }
