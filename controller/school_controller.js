@@ -4,7 +4,7 @@ var user_model = require('../model/user_model')
 
 var result = {status:true, msg: "", data: {}}
 
-var message = require('../model/message.js')
+var msg = require('../model/msg')
 
 var controller = {
 
@@ -20,7 +20,7 @@ var controller = {
         }).then(school_model.add_school)
         .then(function(data){
             result.status = true;
-            result.msg = message.RegistSuccess;
+            result.msg = msg.RegistSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
@@ -28,7 +28,7 @@ var controller = {
         .catch(function(err){
             console.log(err);
             result.data = {};
-            result.msg = message.RegistFail;
+            result.msg = msg.RegistFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -52,7 +52,7 @@ var controller = {
         .then(function(data){
             data = JSON.parse(data);
             result.data = data;
-            result.msg = message.acceptSuceess;
+            result.msg = msg.acceptSuceess;
             result.status = true;
             res.send(result);
             res.end();
@@ -60,7 +60,7 @@ var controller = {
         .catch(function(err){
             console.log(err);
             result.data = {};
-            result.msg = message.acceptFail;
+            result.msg = msg.acceptFail;
             result.status = false;
             res.send(result);
             res.end();

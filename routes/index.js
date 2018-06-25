@@ -29,4 +29,8 @@ router.post('/getmytrains', trainee_controller.getMyTrains);
 // 教练
 router.post('/registtrains', trainer_controller.registTrain);
 
+// 消息
+router.post('/sentmessage', user_controller.sentMessage);
+router.post('/getmessages', user_controller.getMessages);
+
 module.exports = router;

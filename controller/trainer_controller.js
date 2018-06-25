@@ -1,7 +1,7 @@
 var train_model = require('../model/train_model')
 var user_model = require('../model/user_model.js')
 
-var message = require('../model/message.js')
+var msg = require('../model/msg')
 
 var result = {status:true , msg: "", data: {}}
 
@@ -21,14 +21,14 @@ var controller = {
         .then(train_model.add_train)
         .then(function(data){
             result.status = true;
-            result.msg = message.RegistTrainSuccess;
+            result.msg = msg.RegistTrainSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.RegistTrainFail;
+            result.msg = msg.RegistTrainFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -45,17 +45,17 @@ var controller = {
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
-        .then(apply_model.get_trainers)
+        .then(apply_model.get_trains)
         .then(function(data){
             result.status = true;
-            result.msg = message.GetTrainsSuccess;
+            result.msg = msg.GetTrainsSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.GetTrainsFail;
+            result.msg = msg.GetTrainsFail;
             result.status = false;
             res.send(result);
             res.end();

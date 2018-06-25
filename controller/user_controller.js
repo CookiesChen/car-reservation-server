@@ -1,8 +1,9 @@
 var user_model = require('../model/user_model.js')
 var apply_model = require('../model/apply_model')
 var school_model = require('../model/school_model.js')
+var message_model = require('../model/message_model.js')
 
-var message = require('../model/message.js')
+var msg = require('../model/msg')
 
 // 返回数据格式
 var result = {status:true, msg: "", data: {}}
@@ -19,14 +20,14 @@ var controller = {
         }).then(user_model.add_user)
         .then(function(data){
             result.status = true;
-            result.msg = message.RegistSchoolSuccess;
+            result.msg = msg.RegistSchoolSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.RegistSchoolFail;
+            result.msg = msg.RegistSchoolFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -44,14 +45,14 @@ var controller = {
         }).then(user_model.find_user)
         .then(function(data){
             result.status = true;
-            result.msg = message.LoginSuccess;
+            result.msg = msg.LoginSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.LoginFail;
+            result.msg = msg.LoginFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -74,14 +75,14 @@ var controller = {
         .then(apply_model.add_apply)
         .then(function(data){
             result.status = true;
-            result.msg = message.ApplySuccess;
+            result.msg = msg.ApplySuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.ApplyFail;
+            result.msg = msg.ApplyFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -101,7 +102,7 @@ var controller = {
             data = JSON.parse(data);
             console.log(data);
             result.data = data;
-            result.msg = message.getApplySuccess;
+            result.msg = msg.getApplySuccess;
             result.status = true;
             res.send(result);
             res.end();
@@ -109,7 +110,7 @@ var controller = {
         .catch(function(err){
             console.log(err);
             result.data = {};
-            result.msg = message.getApplyFail;
+            result.msg = msg.getApplyFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -120,7 +121,7 @@ var controller = {
     // 请求数据json格式 
     // { account }
     getMySchools: function(req, res){
-        console.log("### get school");
+        console.log("### get my school");
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
@@ -128,14 +129,14 @@ var controller = {
         .then(function(data){
             data = JSON.parse(data);
             result.data = data;
-            result.msg = message.getApplySuccess;
+            result.msg = msg.getApplySuccess;
             result.status = true;
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.getApplyFail;
+            result.msg = msg.getApplyFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -146,7 +147,7 @@ var controller = {
     // 请求数据json格式 
     // { account }
     getAllSchools: function(req, res){
-        console.log("### get school");
+        console.log("### get all school");
         return new Promise(function(resolve, reject){
             resolve();
         })
@@ -154,14 +155,66 @@ var controller = {
         .then(function(data){
             data = JSON.parse(data);
             result.data = data;
-            result.msg = message.GetSchoolsSuccess;
+            result.msg = msg.GetSchoolsSuccess;
             result.status = true;
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.GetSchoolsFail;
+            result.msg = msg.GetSchoolsFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
+    },
+
+    // 发送消息
+    // 请求数据json格式 
+    // { from, to, content }
+    sentMessage: function(req, res){
+        console.log("### sent message");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        })
+        .then(message_model.add_message)
+        .then(function(data){
+            data = JSON.parse(data);
+            result.data = data;
+            result.msg = msg.GetSchoolsSuccess;
+            result.status = true;
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            result.data = {};
+            result.msg = msg.GetSchoolsFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
+    },
+
+    // 发送消息
+    // 请求数据json格式 
+    // { from, to, time, content, finish }
+    getMessages: function(req, res){
+        console.log("### get Messages");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        })
+        .then(message_model.get_messages)
+        .then(function(data){
+            data = JSON.parse(data);
+            result.data = data;
+            result.msg = msg.GetSchoolsSuccess;
+            result.status = true;
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            result.data = {};
+            result.msg = msg.GetSchoolsFail;
             result.status = false;
             res.send(result);
             res.end();

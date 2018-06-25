@@ -38,12 +38,14 @@ var model = {
 
     get_train : function(data){
         var json_data = JSON.parse(data);
-        var account = json_data.account;
-        var role = json_data.role;
+        var trainer = json_data.trainer;
         return new Promise(function(resolve, reject){
-            Train.find({ account: account, role: role },function(err, schools){
-                
-                resolve(JSON.stringify(temp));
+            Train.find({ trainer: trainer },function(err, trains){
+                if(err) reject();
+                else{
+                    console.log(trains);
+                    resolve(JSON.stringify(trains));
+                }
             });
         });
     },

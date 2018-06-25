@@ -1,7 +1,7 @@
 var apply_model = require('../model/apply_model')
 var train_model = require('../model/train_model.js')
 
-var message = require('../model/message.js')
+var msg = require('../model/msg')
 
 var result = {status:true , msg: "", data: {}}
 
@@ -21,14 +21,14 @@ var controller = {
         .then(apply_model.get_trainers)
         .then(function(data){
             result.status = true;
-            result.msg = message.GetTrainerSuccess;
+            result.msg = msg.GetTrainerSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.GetTrainerFail;
+            result.msg = msg.GetTrainerFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -41,21 +41,21 @@ var controller = {
     // 返回数据json格式
     // { 训练数组 }
     getMyTrains: function(req, res){
-        console.log("### get Trains");
+        console.log("### get my trains");
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
         .then(train_model.get_mytrains)
         .then(function(data){
             result.status = true;
-            result.msg = message.GetTrainsSuccess;
+            result.msg = msg.GetTrainsSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.GetTrainsFail;
+            result.msg = msg.GetTrainsFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -75,7 +75,7 @@ var controller = {
         .then(train_model.add_trainee)
         .then(function(data){
             result.status = true;
-            result.msg = message.JoinTrainSuccess;
+            result.msg = msg.JoinTrainSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
@@ -83,7 +83,7 @@ var controller = {
         .catch(function(err){
             console.log(err);
             result.data = {};
-            result.msg = message.JoinTrainFail;
+            result.msg = msg.JoinTrainFail;
             result.status = false;
             res.send(result);
             res.end();

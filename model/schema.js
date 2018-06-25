@@ -11,7 +11,6 @@ var model = {
         name : String,
         phone : String,
         schoolId: String,
-        friends: Array,
         role: String
         // none    未定
         // trainee 学员
@@ -21,7 +20,6 @@ var model = {
     
     school: mongoose.model('School', new mongoose.Schema({
         _id : String,
-        // 名字作为主码
         phone : String,
         email : String
 
@@ -50,7 +48,18 @@ var model = {
         // accept  通过
         // wait    审核中
         // reject  被拒绝
+    })),
+
+    message: mongoose.model('Message', new mongoose.Schema({
+        from : String,
+        to : String,
+        time : Date,
+        content : String,
+        finish: Boolean
+        // true 已读
+        // false 未读
     }))
+
 }
 
 module.exports = model
