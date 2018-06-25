@@ -45,7 +45,7 @@ var controller = {
         return new Promise(function(resolve, reject){
             resolve(JSON.stringify(req.body));
         })
-        .then(apply_model.get_trains)
+        .then(train_model.get_trains)
         .then(function(data){
             result.status = true;
             result.msg = msg.GetTrainsSuccess;
