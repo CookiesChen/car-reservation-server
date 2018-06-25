@@ -19,7 +19,16 @@ var msg = {
     RegistSchoolFail: "School's name has been registed",
 
     GetTrainerSuccess: "Get trainer success",
-    GetTrainerFail: "Get trainer fail"
+    GetTrainerFail: "Get trainer fail",
+
+    RegistTrainSuccess: "Regist train success",
+    RegistTrainFail: "Regist train fail",
+
+    GetSchoolsSuccess: "Regist train success",
+    GetSchoolsFail: "Regist train fail",
+
+    JoinTrainSuccess: "Join train success",
+    JoinTrainFail: "Join train fail"
 }
 
 module.exports = msg

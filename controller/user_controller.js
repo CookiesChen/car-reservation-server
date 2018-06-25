@@ -97,23 +97,37 @@ var controller = {
             resolve(JSON.stringify(req.body));
         })
         .then(apply_model.get_apply)
-        .then(school_model.get_schools)
         .then(function(data){
             data = JSON.parse(data);
-            var applytimes = data.applytimes;
-            var status = data.status;
-            var schoolIds = data.schoolIds;
-            var schools = data.schools;
-            for(var i = 0; i < schoolIds.length; i++){
-                for(var j = 0; j < schoolIds.length; j++){
-                    if(schools[i]._id == schoolIds[j]){
-                        schools[i]['applytime'] = applytimes[j];
-                        schools[i]['status'] = status[j];
-                        break;
-                    }
-                }
-            }
-            result.data = {schools: schools};
+            console.log(data);
+            result.data = data;
+            result.msg = message.getApplySuccess;
+            result.status = true;
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            console.log(err);
+            result.data = {};
+            result.msg = message.getApplyFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
+    },
+
+    // 我的驾校列表
+    // 请求数据json格式 
+    // { account }
+    getMySchools: function(req, res){
+        console.log("### get school");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify(req.body));
+        })
+        .then(apply_model.get_acceptschools)
+        .then(function(data){
+            data = JSON.parse(data);
+            result.data = data;
             result.msg = message.getApplySuccess;
             result.status = true;
             res.send(result);
@@ -128,27 +142,26 @@ var controller = {
         });
     },
 
-    // 我的驾校列表
+    // 驾校列表
     // 请求数据json格式 
     // { account }
-    getSchools: function(req, res){
+    getAllSchools: function(req, res){
         console.log("### get school");
         return new Promise(function(resolve, reject){
-            resolve(JSON.stringify(req.body));
+            resolve();
         })
-        .then(apply_model.get_acceptschools)
         .then(school_model.get_schools)
         .then(function(data){
             data = JSON.parse(data);
-            result.data = data.schools;
-            result.msg = message.getApplySuccess;
+            result.data = data;
+            result.msg = message.GetSchoolsSuccess;
             result.status = true;
             res.send(result);
             res.end();
         })
         .catch(function(err){
             result.data = {};
-            result.msg = message.getApplyFail;
+            result.msg = message.GetSchoolsFail;
             result.status = false;
             res.send(result);
             res.end();

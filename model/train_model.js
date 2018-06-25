@@ -7,29 +7,31 @@ var model = {
 
     add_train : function(data){
         var json_data = JSON.parse(data);
-        var traineeId = json_data.account;
-        var trainerId = json_data.trainerId;
-        var mydate = new Date();
+        var trainer = json_data.account;
+        var name = json_data.name;
+        var startime = json_data.startime;
+        var endtime = json_data.endtime;
+        var registtime = json_data.registtime;
         var train = new Train({
-            traineeId: traineeId,
-            trainerId: trainerId,
-            time: mydate,
-            status: "wait"
+            trainees: [],
+            name: name,
+            trainer: trainer,
+            startime: startime,
+            endtime: endtime,
+            registtime: registtime
         });
         return new Promise(function(resolve, reject){
             train.save(err=>{
-                resolve(err);
-            });
-        });
-    },
-
-    update_train : function(data){
-        var json_data = JSON.parse(data);
-        var traineeId = json_data.account;
-        var trainerId = json_data.trainerId;
-        return new Promise(function(resolve, reject){
-            Train.update({traineeId: traineeId, trainerId: trainerId}, { status: "accept" }, function(err){
-                resolve(err);
+                if(err) reject();
+                else{
+                    resolve(JSON.stringify({
+                        trainees: [],
+                        trainer: trainer,
+                        startime: startime,
+                        endtime: endtime,
+                        registtime: registtime
+                    }));
+                }
             });
         });
     },
@@ -40,16 +42,39 @@ var model = {
         var role = json_data.role;
         return new Promise(function(resolve, reject){
             Train.find({ account: account, role: role },function(err, schools){
-                var temp = { schools: [], time: [], status: [] };
-                for(var i = 0; i < schools.length; i ++){
-                    temp.schools[i] = schools[i].schoolId;
-                    temp.time[i] = schools[i].time;
-                    temp.status[i] = schools[i].status;
-                }
+                
                 resolve(JSON.stringify(temp));
             });
         });
-    }
+    },
+
+    add_trainee : function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        var name = json_data.name;
+        return new Promise(function(resolve, reject){
+            Train.findOneAndUpdate({ name: name },{$addToSet:{trainees: account}},function(err, traintoFind){
+                if(err) reject();
+                else{
+                    resolve(JSON.stringify(traintoFind));
+                }
+            });
+        });
+    },
+
+    get_mytrains : function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        return new Promise(function(resolve, reject){
+            Train.find({trainees: account}).exec(function(err, trains){
+                if(err) reject();
+                else{
+                    console.log(trains);
+                    resolve(JSON.stringify(trains));
+                }
+            });
+        });
+    },
 
 
 }

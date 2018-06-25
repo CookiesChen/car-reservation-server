@@ -66,6 +66,7 @@ var controller = {
             res.end();
         });
     }
+
 }
 
 module.exports = controller;

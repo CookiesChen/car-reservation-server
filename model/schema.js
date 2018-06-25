@@ -11,6 +11,7 @@ var model = {
         name : String,
         phone : String,
         schoolId: String,
+        friends: Array,
         role: String
         // none    未定
         // trainee 学员
@@ -27,9 +28,9 @@ var model = {
     })),
 
     apply:  mongoose.model('apply', new mongoose.Schema({
-        schoolId : String,
-        account : String,
-        time : Date,
+        schoolId :{ type: String, ref: 'School'},
+        account : { type: String, ref: 'User'},
+        applytime : Date,
         role : String,
         status: String
         // accept  通过
@@ -37,11 +38,15 @@ var model = {
         // reject  被拒绝
     })),
 
+
     train: mongoose.model('train', new mongoose.Schema({
-        trainerId : String,
-        traineeId : String,
-        time : Date,
-        status: String
+        trainer : {type: String, ref: 'User'},
+        trainees : [{type: String, ref: 'User'}],
+        schoolId: {type: String, ref: 'School'},
+        name: { type: String, unique: true},
+        starttime : Date,
+        endtime : Date,
+        registtime : Date
         // accept  通过
         // wait    审核中
         // reject  被拒绝
