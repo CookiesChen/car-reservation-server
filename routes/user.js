@@ -4,6 +4,7 @@ var user_controller = require('../controller/user')
 
 router.post('/regist', user_controller.regist);
 router.post('/login', user_controller.login);
+router.get('/logout', user_controller.logout);
 router.post('/applytrainee', user_controller.apply);
 router.post('/applytrainer', user_controller.apply);
 router.get('/getapply', user_controller.getApply);

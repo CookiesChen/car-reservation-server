@@ -63,6 +63,15 @@ var controller = {
         });
     },
 
+    // 登出
+    logout: function (req, res) {
+        console.log("### logout");
+        delete req.session;
+        result.msg = 'Log out';
+        res.send(result);
+        res.end();
+    },
+
     // 申请身份
     // 请求数据json格式 
     // { schoolId }
