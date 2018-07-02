@@ -67,6 +67,7 @@ var controller = {
     logout: function (req, res) {
         console.log("### logout");
         delete req.session;
+        result = {status:true, msg: "", data: {}}
         result.msg = 'Log out';
         res.send(result);
         res.end();

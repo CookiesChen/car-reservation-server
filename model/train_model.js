@@ -43,7 +43,6 @@ var model = {
             Train.find({ trainer: trainer },function(err, trains){
                 if(err) reject();
                 else{
-                    console.log(trains);
                     resolve(JSON.stringify(trains));
                 }
             });
@@ -71,14 +70,25 @@ var model = {
             Train.find({trainees: account}).exec(function(err, trains){
                 if(err) reject();
                 else{
-                    console.log(trains);
                     resolve(JSON.stringify(trains));
                 }
             });
         });
     },
 
-
+    check_trainee: function(data){
+        var json_data = JSON.parse(data);
+        var name = json_data.name;
+        var trainee = json_data.trainee;
+        return new Promise(function(resolve, reject){
+            Train.find({name: name, trainees: trainee}).exec(function(err, trains){
+                if(trains.length != 0) reject();
+                else{
+                    resolve(data);
+                }
+            });
+        });
+    }
 }
 
 

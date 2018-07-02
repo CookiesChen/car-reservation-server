@@ -56,14 +56,16 @@ var model = {
     get_apply : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
+        console.log(account);
         return new Promise(function(resolve, reject){
             Apply.find({ account: account }).populate('schoolId').exec(function(err, apply){
                 if(err) reject(err);
                 else{
-                    var temp = new Array();
+                    console.log(apply);
+                    var temp = new Array(apply);
                     for(var i = 0; i < apply.length; i++){
                         var obj = {};
-                        obj["school"] = apply[i].schoolId.schoolId;
+                        obj["school"] = apply[i].schoolId._id;
                         obj["email"] = apply[i].schoolId.email;
                         obj["phone"] = apply[i].schoolId.phone;
                         obj["status"] = apply[i].status;
@@ -85,7 +87,7 @@ var model = {
                 var temp = new Array();
                 for(var i = 0; i < schools.length; i++){
                     var obj = {};
-                    obj["school"] = schools[i].schoolId.schoolId;
+                    obj["school"] = schools[i].schoolId._id;
                     obj["email"] = schools[i].schoolId.email;
                     obj["phone"] = schools[i].schoolId.phone;
                     obj["applytime"] = schools[i].applytime;
@@ -117,7 +119,7 @@ var model = {
                 var temp = [];
                 for(var i = 0; i < trainers.length; i++){
                     var obj = new Object();
-                    obj['account'] = trainers[i].account.account;
+                    obj['account'] = trainers[i].account._id;
                     obj['name'] = trainers[i].account.name;
                     obj['schoolId'] = trainers[i].account.schoolId;
                     obj['phone'] = trainers[i].account.phone;

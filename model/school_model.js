@@ -25,13 +25,13 @@ var model = {
         var phone = json_data.phone;
         var email = json_data.email;
         var school = new School({
-            schoolId : schoolId,
+            _id : schoolId,
             phone : phone,
             email : email
         });
         return new Promise(function(resolve, reject){
             school.save(err=>{
-                if(err) reject();
+                if(err) reject(err);
                 else{
                     resolve(JSON.stringify({
                         schoolId : schoolId,

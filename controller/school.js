@@ -25,6 +25,7 @@ var controller = {
             res.end();
         })
         .catch(function(err){
+            console.log(err);
             result.data = {};
             result.msg = msg.RegistSchoolFail;
             result.status = false;

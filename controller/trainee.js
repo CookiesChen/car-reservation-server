@@ -72,6 +72,7 @@ var controller = {
                 trainee: req.session.userId
             }));
         })
+        .then(train_model.check_trainee)
         .then(train_model.add_trainee)
         .then(function(data){
             result.status = true;

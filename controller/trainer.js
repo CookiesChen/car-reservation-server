@@ -42,16 +42,16 @@ var controller = {
     },
 
     // 获取训练列表
-    // 请求数据json格式 
-    // { schoolId }
     // 返回数据json格式
     // { 训练数组 }
     getTrains: function(req, res){
         console.log("### get Trains");
         return new Promise(function(resolve, reject){
-            resolve(JSON.stringify(req.body));
+            resolve(JSON.stringify({
+                trainer: req.session.userId
+            }));
         })
-        .then(train_model.get_trains)
+        .then(train_model.get_train)
         .then(function(data){
             result.status = true;
             result.msg = msg.GetTrainsSuccess;

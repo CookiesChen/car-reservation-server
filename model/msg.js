@@ -28,7 +28,7 @@ var msg = {
     GetSchoolsFail: "Get Schools fail",
 
     JoinTrainSuccess: "Join train success",
-    JoinTrainFail: "Join train fail",
+    JoinTrainFail: "You have joined the train",
 
     SentMessageSuccess: "Sent Message success",
     SentMessageFail: "Sent Message fail",

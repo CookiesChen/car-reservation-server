@@ -16,7 +16,6 @@ const whiteList = {
 }
 
 router.use('/*', (req, res, next)=>{
-    console.log(req.session);
     if(!whiteList.post[req.originalUrl]){
         if(!req.session.userId){
             res.send({
