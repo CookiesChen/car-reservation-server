@@ -9,7 +9,7 @@ var model = {
         var password = json_data.password;
         var phone = json_data.phone;
         var user = new User({
-            _id: account,
+            account: account,
             password: password,
             name : "",
             phone : phone,
@@ -37,12 +37,11 @@ var model = {
         var account = json_data.account;
         var password = json_data.password;
         return new Promise(function(resolve, reject){
-            User.find({_id:account, password:password}, function(err, userToFind){
-                
+            User.find({account:account, password:password}, function(err, userToFind){
                 if(userToFind.length == 0) reject();
                 else{
                     resolve(JSON.stringify({
-                        account: userToFind[0].account,
+                        account: account,
                         name : userToFind[0].name,
                         phone : userToFind[0].phone,
                         schoolId : userToFind[0].schoolId,
@@ -56,7 +55,7 @@ var model = {
     get_users: function(data){
         var json_data = JSON.parse(data);
         return new Promise(function(resolve, reject){
-            User.find({ _id : {"$in" : json_data.users}}, function(err, users){
+            User.find({ account : {"$in" : json_data.users}}, function(err, users){
                 resolve(JSON.stringify({users : users}));
             });
         });

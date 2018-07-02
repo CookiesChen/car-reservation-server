@@ -7,16 +7,16 @@ var model = {
 
     add_train : function(data){
         var json_data = JSON.parse(data);
-        var trainer = json_data.account;
+        var trainer = json_data.trainer;
         var name = json_data.name;
-        var startime = json_data.startime;
+        var starttime = json_data.starttime;
         var endtime = json_data.endtime;
         var registtime = json_data.registtime;
         var train = new Train({
             trainees: [],
             name: name,
             trainer: trainer,
-            startime: startime,
+            starttime: starttime,
             endtime: endtime,
             registtime: registtime
         });
@@ -27,7 +27,7 @@ var model = {
                     resolve(JSON.stringify({
                         trainees: [],
                         trainer: trainer,
-                        startime: startime,
+                        starttime: starttime,
                         endtime: endtime,
                         registtime: registtime
                     }));
@@ -52,10 +52,10 @@ var model = {
 
     add_trainee : function(data){
         var json_data = JSON.parse(data);
-        var account = json_data.account;
+        var trainee = json_data.trainee;
         var name = json_data.name;
         return new Promise(function(resolve, reject){
-            Train.findOneAndUpdate({ name: name },{$addToSet:{trainees: account}},function(err, traintoFind){
+            Train.findOneAndUpdate({ name: name },{$addToSet:{trainees: trainee}},function(err, traintoFind){
                 if(err) reject();
                 else{
                     resolve(JSON.stringify(traintoFind));

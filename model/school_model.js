@@ -22,10 +22,12 @@ var model = {
     add_school : function(data){
         var json_data = JSON.parse(data);
         var schoolId = json_data.schoolId;
+        var phone = json_data.phone;
+        var email = json_data.email;
         var school = new School({
-            _id : schoolId,
-            phone : "",
-            email : ""
+            schoolId : schoolId,
+            phone : phone,
+            email : email
         });
         return new Promise(function(resolve, reject){
             school.save(err=>{
@@ -33,8 +35,8 @@ var model = {
                 else{
                     resolve(JSON.stringify({
                         schoolId : schoolId,
-                        phone : "",
-                        email : ""
+                        phone : phone,
+                        email : email
                     }));
                 }
             });

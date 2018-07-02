@@ -10,13 +10,19 @@ var controller = {
 
     // 获取同驾校教练列表
     // 请求数据json格式 
-    // { account(教练账号), name(训练名字), starttime(训练起始时间), endtime(训练起结束时间), registtime }
+    // { name(训练名字), starttime(训练起始时间), endtime(训练起结束时间), registtime }
     // 返回数据json格式
     // { 教练数组 }
     registTrain: function(req, res){
         console.log("### regist train");
         return new Promise(function(resolve, reject){
-            resolve(JSON.stringify(req.body));
+            resolve(JSON.stringify({
+                trainer: req.session.userId,
+                name: req.body.name,
+                starttime: req.body.starttime,
+                endtime: req.body.endtime,
+                registtime: req.body.registtime
+            }));
         })
         .then(train_model.add_train)
         .then(function(data){

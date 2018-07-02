@@ -10,9 +10,8 @@ var controller = {
 
     // 注册驾校
     // 请求数据json格式 
-    // { schoolId } 待完善
+    // { schoolId, phone, email }
     // 返回数据json格式
-    // { status, msg }
     registSchool: function (req, res) {
         console.log("### register school");
         return new Promise(function(resolve, reject){
@@ -20,15 +19,14 @@ var controller = {
         }).then(school_model.add_school)
         .then(function(data){
             result.status = true;
-            result.msg = msg.RegistSuccess;
+            result.msg = msg.RegistSchoolSuccess;
             result.data = JSON.parse(data);
             res.send(result);
             res.end();
         })
         .catch(function(err){
-            console.log(err);
             result.data = {};
-            result.msg = msg.RegistFail;
+            result.msg = msg.RegistSchoolFail;
             result.status = false;
             res.send(result);
             res.end();
@@ -39,7 +37,6 @@ var controller = {
     // 请求数据json格式 
     // { account, schoolId}
     // 返回数据json格式
-    // { status, msg }
     acceptApply: function(req, res){
         console.log("### accept apply");
         return new Promise(function(resolve, reject){
@@ -58,7 +55,6 @@ var controller = {
             res.end();
         })
         .catch(function(err){
-            console.log(err);
             result.data = {};
             result.msg = msg.acceptFail;
             result.status = false;

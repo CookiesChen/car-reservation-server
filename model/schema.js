@@ -6,7 +6,7 @@ var conn = mongoose.connect('mongodb://127.0.0.1:27017/car');
 var model = {
 
     user : mongoose.model('User', new mongoose.Schema({
-        _id : String,
+        account : { type: String, unique: true},
         password : String,
         name : String,
         phone : String,
@@ -19,7 +19,7 @@ var model = {
     })),
     
     school: mongoose.model('School', new mongoose.Schema({
-        _id : String,
+        schoolId : { type: String, unique: true},
         phone : String,
         email : String
 

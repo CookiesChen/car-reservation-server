@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Router = require('./routes/index');
@@ -24,6 +25,16 @@ app.all('*', function (req, res, next) {
   else  next();
 })
 
+
+app.use(cookieParser());
+
+app.use(session({
+    secret: '12345',
+    name: 'token',
+    cookie: {maxAge: 1000 * 3600 * 24},//一天
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use('/', Router);
 

@@ -7,12 +7,14 @@ var model = {
 
     add_message : function(data){
         var json_data = JSON.parse(data);
-        var from = json_data.account;
+        var from = json_data.from;
         var to = json_data.to;
+        var content = json_data.content;
+        var time = new Date();
         var message = new Message({
             from : from,
             to : to,
-            time : new Date(),
+            time : time,
             content : content,
             finish: false
         });

@@ -1,10 +1,10 @@
 var allModel = require('../model/schema.js')
 
 var Apply = allModel.apply;
-
+var User = allModel.user;
 
 var model = {
-
+    
     // 添加申请
     add_apply : function(data){
         var json_data = JSON.parse(data);
@@ -56,7 +56,6 @@ var model = {
     get_apply : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
-        var role = json_data.role;
         return new Promise(function(resolve, reject){
             Apply.find({ account: account }).populate('schoolId').exec(function(err, apply){
                 if(err) reject(err);
@@ -64,7 +63,7 @@ var model = {
                     var temp = new Array();
                     for(var i = 0; i < apply.length; i++){
                         var obj = {};
-                        obj["school"] = apply[i].schoolId._id;
+                        obj["school"] = apply[i].schoolId.schoolId;
                         obj["email"] = apply[i].schoolId.email;
                         obj["phone"] = apply[i].schoolId.phone;
                         obj["status"] = apply[i].status;
@@ -81,16 +80,16 @@ var model = {
     get_acceptschools : function(data){
         var json_data = JSON.parse(data);
         var account = json_data.account;
-        var role = json_data.role;
         return new Promise(function(resolve, reject){
             Apply.find({ account: account, status: "accept"}).populate('schoolId').exec(function(err, schools){
                 var temp = new Array();
                 for(var i = 0; i < schools.length; i++){
                     var obj = {};
-                    obj["school"] = schools[i].schoolId._id;
+                    obj["school"] = schools[i].schoolId.schoolId;
                     obj["email"] = schools[i].schoolId.email;
                     obj["phone"] = schools[i].schoolId.phone;
                     obj["applytime"] = schools[i].applytime;
+                    obj["status"] = "accept";
                     temp[i] = obj;
                 }
                 resolve(JSON.stringify(temp));
@@ -103,17 +102,8 @@ var model = {
         var json_data = JSON.parse(data);
         var schoolId = json_data.schoolId;
         return new Promise(function(resolve, reject){
-            Apply.find({ schoolId: schoolId, role: "trainer", status: "accept"}).populate('account').exec(function(err, trainers){
-                var temp = [];
-                for(var i = 0; i < trainers.length; i++){
-                    var obj = new Object();
-                    obj['account'] = trainers[i].account._id;
-                    obj['name'] = trainers[i].account.name;
-                    obj['schoolId'] = trainers[i].account.schoolId;
-                    obj['phone'] = trainers[i].account.phone;
-                    temp.push(obj);
-                }
-                resolve(JSON.stringify(temp));
+            User.find({ schoolId: schoolId, role: "trainer"}).exec(function(err, trainers){
+                resolve(JSON.stringify({trainers: trainers}));
             });
         });
     },
@@ -127,7 +117,7 @@ var model = {
                 var temp = [];
                 for(var i = 0; i < trainers.length; i++){
                     var obj = new Object();
-                    obj['account'] = trainers[i].account._id;
+                    obj['account'] = trainers[i].account.account;
                     obj['name'] = trainers[i].account.name;
                     obj['schoolId'] = trainers[i].account.schoolId;
                     obj['phone'] = trainers[i].account.phone;

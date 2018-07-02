@@ -1,36 +1,40 @@
 var express = require('express');
 var router = express.Router();
-var user_controller = require('../controller/user_controller.js')
-var school_controller = require('../controller/school_controller.js')
-var trainee_controller = require('../controller/trainee_controller.js')
-var trainer_controller = require('../controller/trainer_controller.js')
+var app = express();
 
-// 用户
-router.post('/regist', user_controller.regist);
-router.post('/login', user_controller.login);
-router.post('/applytrainee', user_controller.apply);
-router.post('/applytrainer', user_controller.apply);
-router.post('/getapply', user_controller.getApply);
-router.post('/getmyschools', user_controller.getMySchools);
-router.get('/getallschools', user_controller.getAllSchools);
+var user = require('./user');
+var trainee = require('./trainee');
+var trainer = require('./trainer');
+var school = require('./school');
 
-// 管理员
-router.post('/registschool', school_controller.registSchool);
+const whiteList = {
+    post: {
+      '/user/login': true,
+      '/user/regist': true,
+      '/school/registschool': true
+    }
+}
 
-// 驾校
-router.post('/accepttraninee', school_controller.acceptApply);
-router.post('/accepttraniner', school_controller.acceptApply);
+router.use('/*', (req, res, next)=>{
+    console.log(req.session);
+    if(!whiteList.post[req.originalUrl]){
+        if(!req.session.userId){
+            res.send({
+                status: false, 
+                msg: "Please log in", 
+                data: {}
+            });
+            res.end();
+            return;
+        }
+    }
+    next();
+});
 
-// 学员
-router.post('/jointrain', trainee_controller.joinTrain);
-router.post('/gettrainer', trainee_controller.getTrainer);
-router.post('/getmytrains', trainee_controller.getMyTrains);
+router.use('/user', user);
+router.use('/trainee', trainee);
+router.use('/trainer', trainer);
+router.use('/school', school);
 
-// 教练
-router.post('/registtrains', trainer_controller.registTrain);
-
-// 消息
-router.post('/sentmessage', user_controller.sentMessage);
-router.post('/getmessages', user_controller.getMessages);
 
 module.exports = router;

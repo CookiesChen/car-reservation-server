@@ -22,13 +22,19 @@ var msg = {
     GetTrainerFail: "Get trainer fail",
 
     RegistTrainSuccess: "Regist train success",
-    RegistTrainFail: "Regist train fail",
+    RegistTrainFail: "Train's name has been registed",
 
-    GetSchoolsSuccess: "Regist train success",
-    GetSchoolsFail: "Regist train fail",
+    GetSchoolsSuccess: "Get Schools success",
+    GetSchoolsFail: "Get Schools fail",
 
     JoinTrainSuccess: "Join train success",
-    JoinTrainFail: "Join train fail"
+    JoinTrainFail: "Join train fail",
+
+    SentMessageSuccess: "Sent Message success",
+    SentMessageFail: "Sent Message fail",
+
+    GetMessageSuccess: "Get Message success",
+    GetMessageFail: "Get Message fail"
 }
 
 module.exports = msg
