@@ -36,13 +36,15 @@ var controller = {
 
     // 同意申请
     // 请求数据json格式 
-    // { account, schoolId}
+    // { account}
     // 返回数据json格式
     acceptApply: function(req, res){
         console.log("### accept apply");
         return new Promise(function(resolve, reject){
-            var temp = req.body;
-            temp['role'] = (req.url == "/accepttraninee")? "trainee" : "trainer"; 
+            var temp = {};
+            temp['role'] = (req.url == "/accepttraninee") ? "trainee" : "trainer"; 
+            temp['account'] = req.body.account;
+            temp['schoolId'] = req.session.schoolId;
             resolve(JSON.stringify(temp));
         })
         .then(user_model.modify_user)
