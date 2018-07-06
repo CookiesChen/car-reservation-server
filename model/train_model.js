@@ -40,7 +40,7 @@ var model = {
         var json_data = JSON.parse(data);
         var trainer = json_data.trainer;
         return new Promise(function(resolve, reject){
-            Train.find({ trainer: trainer },function(err, trains){
+            Train.find({ trainer: trainer }).populate('trainees').exec(function(err, trains){
                 if(err) reject();
                 else{
                     resolve(JSON.stringify(trains));
@@ -67,7 +67,7 @@ var model = {
         var json_data = JSON.parse(data);
         var account = json_data.account;
         return new Promise(function(resolve, reject){
-            Train.find({trainees: account}).exec(function(err, trains){
+            Train.find({trainees: account}).populate('trainees').exec(function(err, trains){
                 if(err) reject();
                 else{
                     resolve(JSON.stringify(trains));

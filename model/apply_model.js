@@ -52,6 +52,23 @@ var model = {
         });
     },
     
+    
+    fail_apply : function(data){
+        var json_data = JSON.parse(data);
+        var account = json_data.account;
+        var schoolId = json_data.schoolId;
+        var role = json_data.role;
+        console.log(json_data.role);
+        return new Promise(function(resolve, reject){
+            Apply.update({account: account, schoolId: schoolId, status: "wait"}, {  status: "reject" }, function(err){
+                if(err) reject();
+                else{
+                    resolve(data);
+                }
+            });
+        });
+    },
+
     // 获得学校ID、申请时间列表
     get_apply : function(data){
         var json_data = JSON.parse(data);
@@ -123,6 +140,26 @@ var model = {
                     obj['name'] = trainers[i].account.name;
                     obj['schoolId'] = trainers[i].account.schoolId;
                     obj['phone'] = trainers[i].account.phone;
+                    temp.push(obj);
+                }
+                resolve(JSON.stringify(temp));
+            });
+        });
+    },
+
+    // 获得学员
+    get_classmate : function(data){
+        var json_data = JSON.parse(data);
+        var schoolId = json_data.schoolId;
+        return new Promise(function(resolve, reject){
+            Apply.find({ schoolId: schoolId, role: "trainee", status: "accept"}).populate('account').exec(function(err, classmate){
+                var temp = [];
+                for(var i = 0; i < classmate.length; i++){
+                    var obj = new Object();
+                    obj['account'] = classmate[i].account._id;
+                    obj['name'] = classmate[i].account.name;
+                    obj['schoolId'] = classmate[i].account.schoolId;
+                    obj['phone'] = classmate[i].account.phone;
                     temp.push(obj);
                 }
                 resolve(JSON.stringify(temp));

@@ -34,7 +34,10 @@ var msg = {
     SentMessageFail: "Sent Message fail",
 
     GetMessageSuccess: "Get Message success",
-    GetMessageFail: "Get Message fail"
+    GetMessageFail: "Get Message fail",
+
+    GetTrainsSuccess: "Get Trains success",
+    GetTrainsFail: "Get Trains fail"
 }
 
 module.exports = msg

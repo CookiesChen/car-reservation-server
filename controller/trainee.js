@@ -59,6 +59,34 @@ var controller = {
         });
     },
 
+    // 通过id查看教练训练列表
+    // 请求数据json格式 
+    // { trainerId }
+    getTrainsById: function(req, res){
+        console.log("### get my trains");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify({
+                trainer: req.body.trainerId
+            }));
+        })
+        .then(train_model.get_train)
+        .then(function(data){
+            result.status = true;
+            result.msg = msg.GetTrainsSuccess;
+            result.data = JSON.parse(data);
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            console.log(err);
+            result.data = {};
+            result.msg = msg.GetTrainsFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
+    },
+
     // 获取训练列表
     // 请求数据json格式 
     // { name }
@@ -88,7 +116,33 @@ var controller = {
             res.send(result);
             res.end();
         });
-    }
+    },
+
+
+    //获取同校学员列表
+    getClassmate: function(req, res){
+        console.log("### get my trains");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify({
+                schoolId: req.session.schoolId
+            }));
+        })
+        .then(apply_model.get_classmate)
+        .then(function(data){
+            result.status = true;
+            result.msg = msg.GetTrainsSuccess;
+            result.data = JSON.parse(data);
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            result.data = {};
+            result.msg = msg.GetTrainsFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
+    },
 }
 
 module.exports = controller;

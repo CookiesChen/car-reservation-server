@@ -49,6 +49,7 @@ var controller = {
         })
         .then(user_model.modify_user)
         .then(apply_model.accept_apply)
+        .then(apply_model.fail_apply)
         .then(function(data){
             data = JSON.parse(data);
             result.data = data;
