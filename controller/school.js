@@ -65,6 +65,33 @@ var controller = {
             res.send(result);
             res.end();
         });
+    },
+
+    // 获取申请表
+    getwait: function(req, res){
+        console.log("### get wait");
+        return new Promise(function(resolve, reject){
+            resolve(JSON.stringify({
+                schoolId: req.session.schoolId
+            }));
+        })
+        .then(apply_model.get_wait)
+        .then(function(data){
+            data = JSON.parse(data);
+            result.data = data;
+            result.msg = msg.getApplySuccess;
+            result.status = true;
+            res.send(result);
+            res.end();
+        })
+        .catch(function(err){
+            console.log(err);
+            result.data = {};
+            result.msg = msg.getApplyFail;
+            result.status = false;
+            res.send(result);
+            res.end();
+        });
     }
 
 }

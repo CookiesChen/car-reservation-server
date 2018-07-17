@@ -95,6 +95,20 @@ var model = {
         });
     },
 
+    // 获得学校ID、申请时间列表
+    get_wait : function(data){
+        var json_data = JSON.parse(data);
+        var schoolId = json_data.schoolId;
+        return new Promise(function(resolve, reject){
+            Apply.find({ schoolId: schoolId, status:"wait" }).exec(function(err, apply){
+                if(err) reject(err);
+                else{
+                    resolve(JSON.stringify({apply:apply}));
+                }
+            });
+        });
+    },
+
     // 获得我的驾校列表
     get_acceptschools : function(data){
         var json_data = JSON.parse(data);
